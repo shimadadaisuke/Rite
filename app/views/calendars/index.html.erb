@@ -76,7 +76,7 @@
               <% end %>
               <% day[:events].each do |event| %>
                 <div class="holiday-description" style="text-align: center;">
-                  <%= link_to event[:start_time] + ' - ' + event[:end_time], new_reservation_path %>
+                  <%= link_to event[:start_time] + ' - ' + event[:end_time], new_reservation_path(date: day[:date]) %>
                 </div>
               <% end %>
             <% else %>

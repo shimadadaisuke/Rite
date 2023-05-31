@@ -1,0 +1,29 @@
+<h1>New Reservation</h1>
+
+<%= form_with(model: @reservation, url: create_reservation_path) do |form| %>
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name, required: true %>
+    <% if @reservation.errors[:first_name].any? %>
+      <div class="error">
+        <%= @reservation.errors[:first_name].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name, required: true %>
+    <% if @reservation.errors[:last_name].any? %>
+      <div class="error">
+        <%= @reservation.errors[:last_name].first %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= form.hidden_field :reservation_date, value: params[:date] %>
+
+  <%= form.submit "予約する", class: "btn btn-primary" %>
+<% end %>
+
+<%= link_to "戻る", calendars_path(date: params[:date]), class: "btn btn-secondary" %>

@@ -1,0 +1,11 @@
+■show.html.erb
+
+<h1>予約詳細</h1>
+
+<p>日時: <%= @reservation.reservation_date.strftime("%Y年%m月%d日 %H:%M") %></p>
+<p>名前: <%= @reservation.first_name %></p>
+<p>苗字: <%= @reservation.last_name %></p>
+
+<%= link_to "予約確定", calendars_path(date: @reservation.reservation_date), class: "btn btn-secondary" %>
+<%= link_to "ホーム", calendars_path(date: @reservation.reservation_date), class: "btn btn-secondary" %>
+<%= link_to "予約修正", new_reservation_path(date: @reservation.reservation_date), class: "btn btn-secondary" %>

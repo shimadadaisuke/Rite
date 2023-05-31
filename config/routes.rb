@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get '/calendars', to: 'calendars#index'
   get '/reservations/new', to: 'reservations#new', as: 'new_reservation'
+  get '/reservations/:id', to: 'reservations#show', as: 'show_reservation'
   post '/reservations', to: 'reservations#create', as: 'create_reservation'
   root 'calendars#index'
 end

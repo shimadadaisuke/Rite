@@ -10,12 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_010628) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_31_071000) do
   create_table "calendars", force: :cascade do |t|
     t.date "date"
     t.string "event"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.string "name"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "reservation_date"
+    t.string "first_name"
+    t.string "last_name"
   end
 
 end
