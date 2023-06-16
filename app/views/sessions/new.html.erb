@@ -1,0 +1,33 @@
+<%= link_to '新規登録はこちらを選択', new_user_path %>
+<h1>ご予約受付</h1>
+
+
+
+<% if flash[:notice] %>
+  <div class="notice">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+
+<%= form_with(url: create_calendar_path, method: :post) do |f| %>
+
+  <div>
+    <%= f.label :苗字（Firstname） %>
+    <%= f.text_field :firstname, value: @firstname %>
+  </div>
+
+  <div>
+    <%= f.label :名前（Lastname） %>
+    <%= f.text_field :lastname, value: @lastname %>
+  </div>
+
+  <div>
+    <br>
+    <%= f.submit "ログイン" %>
+  </div>
+<% end %>
+
+<br>
+お店のご連絡先：<%= link_to '09012345678', 'tel:09012345678' %>
+

@@ -2,7 +2,38 @@ require 'date'
 require 'holidays'
 
 class CalendarsController < ApplicationController
+
+  def create
+    @firstname = params[:firstname]
+    @lastname = params[:lastname]
+
+    # データベースにFirstnameとLastnameの組み合わせが存在するかチェック
+    if User.exists?(firstname: @firstname, lastname: @lastname)
+      session[:firstname] = @firstname
+      session[:lastname] = @lastname
+      redirect_to calendars_path
+    else
+      if @firstname.blank?
+        flash.now[:notice] = "苗字（Firstname）が入力されていません。"
+      elsif @lastname.blank?
+        flash.now[:notice] = "名前（Lastname）が入力されていません。"
+      else
+#        flash.now[:notice] = "ログインに失敗しました。<br>未登録の方は新規登録をお願いします。氏名に誤りがない場合は、お手数ですが、問い合わせをお願いいたします。"
+        flash.now[:notice] = "ログインに失敗しました。<br>-＞未登録の方は新規登録をお願いします。<br>-＞氏名に誤りがない場合は、問い合わせをお願いいたします。".html_safe
+      end
+      render 'sessions/new', layout: 'layouts/application', status: :unprocessable_entity
+    end
+  end
+  
+  
+  
+  
+  
+  
+
   def index
+    @firstname = session[:firstname]
+    @lastname = session[:lastname]
     @events = Calendar.all
     @current_month = params[:month] ? Date.parse("01-#{params[:month]}-#{Date.today.year}") : Date.today.at_beginning_of_month
 
@@ -23,9 +54,15 @@ class CalendarsController < ApplicationController
       end
       @weeks << week
     end
+    
   end
 
   helper_method :weekend_or_holiday?
+
+
+
+
+  
 
   private
 

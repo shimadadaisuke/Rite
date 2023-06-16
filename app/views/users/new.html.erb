@@ -1,0 +1,41 @@
+<h1>新規登録</h1>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<%= form_with(model: @user, url: create_user_path, method: :post) do |f| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-danger">
+      <% error_messages = @user.errors.full_messages %>
+      <% error_messages.each do |message| %>
+        <% if message.include?('Firstname') %>
+          <% message.sub!('Firstname', "#{h @user.firstname} ") %>
+        <% end %>
+        <% if message.include?('Lastname') %>
+          <% message.sub!('Lastname', "#{h @user.lastname}") %>
+        <% end %>
+      <% end %>
+      <%= safe_join(error_messages, ''.html_safe) %>
+    </div>
+  <% end %>
+
+
+  <div>
+    <%= f.label :苗字（Firstname） %>
+    <%= f.text_field :firstname %>
+  </div>
+
+  <div>
+    <%= f.label :名前（Lastname） %>
+    <%= f.text_field :lastname %>
+  </div>
+
+  <div class="button-container">
+    <%= f.submit "新規登録" %>
+    <%= link_to "戻る", root_path, class: "button" %>
+
+  </div>
+<% end %>

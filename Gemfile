@@ -73,3 +73,5 @@ end
 
 
 gem 'holidays'
+gem 'devise'
+gem 'turbolinks'

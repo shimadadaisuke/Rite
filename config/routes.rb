@@ -1,9 +1,32 @@
 Rails.application.routes.draw do
-  # 既存のルートがここにあると仮定
+  # Deviseのルーティング
+  devise_for :users, controllers: {
+    sessions: 'sessions',
+    registrations: 'registrations',
+    passwords: 'passwords'
+  }
 
-  get '/calendars', to: 'calendars#index'
-  get '/reservations/new', to: 'reservations#new', as: 'new_reservation'
-  get '/reservations/:id', to: 'reservations#show', as: 'show_reservation'
-  post '/reservations', to: 'reservations#create', as: 'create_reservation'
-  root 'calendars#index'
+  resources :reservations
+  #post '/signup', to: 'calendars#create', as: :create_user_reservations
+
+  # ユーザー登録と作成のルーティング
+  get '/signup', to: 'users#new', as: :new_user
+  post '/signup', to: 'users#create', as: :create_user
+
+  # ログインとセッションのルーティング
+  get '/login', to: 'sessions#new', as: :new_session
+  post '/login', to: 'sessions#create', as: :create_session
+  delete '/logout', to: 'sessions#destroy', as: :destroy_session
+
+  # ログインからの受取
+  post '/calendars', to: 'calendars#create', as: :create_calendar
+
+  # カレンダーと予約のルーティング
+  get '/calendars', to: 'calendars#index', as: :calendars
+
+  # ルートの設定
+  root 'sessions#new'
+
+  resources :users
+
 end

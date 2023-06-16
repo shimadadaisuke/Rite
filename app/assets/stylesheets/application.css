@@ -1,49 +1,81 @@
 table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    border: 1px solid black;
-    padding: 5px;
-    vertical-align: top;
-  }
-  
-  .date-cell {
-    text-align: left;
-  }
-  
-  .event-cell {
-    text-align: center;
-  }
-  
-  .empty-cell {
-    text-align: center;
-  }
-  
-  .navigation {
-    margin-bottom: 10px;
-  }
-  
-  .prev-month, .next-month {
-    margin-right: 10px;
-  }
-  
-  .holiday {
-    background-color: yellow;
-  }
-  
-  .holiday-name {
-    background-color: purple;
-    color: white;
-  }
-  
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  @media (max-width: 767px) {
-    /* スマートフォン用のスタイルを指定する */
-    /* 例: ナビゲーションバーを縦に表示する */
-    .navbar {
-      flex-direction: column;
-    }
-  }
+th, td {
+  border: 1px solid black;
+  padding: 5px;
+  vertical-align: top;
+}
+
+.date-cell {
+  text-align: left;
+}
+
+.event-cell {
+  text-align: center;
+}
+
+.empty-cell {
+  text-align: center;
+}
+
+.navigation {
+  margin-bottom: 10px;
+}
+
+.prev-month, .next-month {
+  margin-right: 10px;
+}
+
+.holiday {
+  background-color: yellow;
+}
+
+.holiday-name {
+  background-color: purple;
+  color: white;
+}
+
+.alert {
+  background-color: red;
+  color: white;
+  padding: 10px;
+}
+
+.notice {
+  background-color: red;
+  color: white;
+  padding: 10px;
+}
+
+.button-container {
+  margin-top: 20px;
+  margin-right: 20px; 
+}
+
+.button {
+  display: inline-block;
+  padding: 2.5px 12px;
+  background-color: #e2e1e1;
+  color: #020202;
+  text-decoration: none;
+  border-radius: 3px;
+  font-size: 13px;
+  border: 1px solid rgb(92, 89, 89);
+
   
+}
+
+.button:hover {
+  background-color: #dddbdb;
+}
+
+@media (max-width: 767px) {
+  /* スマートフォン用のスタイルを指定する */
+  /* 例: ナビゲーションバーを縦に表示する */
+  .navbar {
+    flex-direction: column;
+  }
+}

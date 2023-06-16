@@ -1,15 +1,20 @@
-<h1>カレンダー</h1>
+<h1>ご予約画面</h1>
+
+<h1>Welcome, <%= @firstname %> <%= @lastname %> 様</h1>
+
 <div class="current-month-container">
   <h2 class="current-month"><%= @current_month.strftime("%Y年%m月") %></h2>
 </div>
 
+
 <div class="navigation">
-  <%= link_to '前月', calendars_path(month: @current_month.prev_month), class: 'prev-month' %>
-  <%= link_to '当月', calendars_path(month: Date.today.month), class: 'current-month' %>
+  <%= link_to '前月', calendars_path(month: @current_month.prev_month, firstname: params[:firstname], lastname: params[:lastname]), class: 'prev-month' %>
+  <%= link_to '当月', calendars_path(month: Date.today.month, firstname: params[:firstname], lastname: params[:lastname]), class: 'current-month' %>
   <div class="next-month">
-    <%= link_to '翌月', calendars_path(month: @current_month.next_month) %>
+    <%= link_to '翌月', calendars_path(month: @current_month.next_month, firstname: params[:firstname], lastname: params[:lastname]) %>
   </div>
 </div>
+
 
 <style>
   .navigation {

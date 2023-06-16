@@ -1,12 +1,14 @@
 class ReservationsController < ApplicationController
+  before_action :authenticate_user! # Deviseを使用している場合、ログインしているユーザーを確認します
+
   def new
-    @reservation = Reservation.new
+    @reservation = current_user.reservations.build
     @reservation.reservation_date = params[:date]
     @first_name, @last_name = params[:name]&.split(" ") || ['', '']
   end
 
   def create
-    @reservation = Reservation.new(reservation_params)
+    @reservation = current_user.reservations.build(reservation_params)
 
     if @reservation.save
       redirect_to show_reservation_path(@reservation.id), notice: "予約が成功しました。"
@@ -17,7 +19,7 @@ class ReservationsController < ApplicationController
   end
 
   def show
-    @reservation = Reservation.find(params[:id])
+    @reservation = current_user.reservations.find(params[:id])
   end
 
   def back_to_new
