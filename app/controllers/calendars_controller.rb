@@ -59,9 +59,32 @@ class CalendarsController < ApplicationController
 
   helper_method :weekend_or_holiday?
 
+  #def new
+  #  selected_datetime = params[:date]
+  #  selected_date = params[:date]
+  #  @selected_datetime = DateTime.parse(selected_datetime) if selected_datetime.present?
+  #  @selected_date = Date.parse(params[:date]) if params[:date].present?
+  #  @reservation = Reservation.new
+  #end
+  
+  #def new
+  #  selected_datetime = params[:date]
+  #  @selected_datetime = DateTime.parse(selected_datetime) if selected_datetime.present?
+  #  @selected_date = @selected_datetime.to_date if @selected_datetime.present?
+  #  @reservation = Reservation.new
+  #end
+  
+  def new
+    selected_datetime = CGI.unescape(params[:date]) if params[:date].present?
+    puts "selected_datetime: #{selected_datetime}"
 
-
-
+    @selected_datetime = DateTime.parse(selected_datetime) if selected_datetime.present?
+    @selected_date = @selected_datetime.strftime("%Y/%m/%d（%a）%H:%M") if @selected_datetime.present?
+    @reservation = Reservation.new
+  end
+  
+  
+  
   
 
   private
@@ -87,3 +110,5 @@ class CalendarsController < ApplicationController
     holidays.map { |holiday| holiday[:name] }
   end
 end
+
+

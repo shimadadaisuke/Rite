@@ -1,18 +1,34 @@
 <!-- confirm.html.erb -->
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>予約確認</title>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(function() {
-          window.location.href = "<%= calendars_path %>";
-        }, 3000);
-      });
-    </script>
-  </head>
-  <body>
-    <h1>予約確認</h1>
-    <p>予約が確定されました。3秒後にホーム画面に遷移します。</p>
-  </body>
-</html>
+
+<h1>予約確認画面</h1>
+<p>ご予約日: <%= @formatted_date %></p>
+<p>ご予約時間: <%= @start_time %></p>
+
+
+
+
+<p>選択した商品:</p>
+<table>
+  <thead>
+    <tr>
+      <th>メニュー</th>
+      <th>金額</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @selected_products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.price %>円</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= form_with model: @reservation, url: reservations_path do |form| %>
+  <!-- 他のフォームの内容 -->
+  <p>合計金額: <%= number_to_currency(@total_price,precision:0,unit:"" ) %>円</p>
+  <p>☆金額はボリューム等によって増額する場合がございます☆</p>
+
+  <%= form.submit "予約する" %>
+<% end %>

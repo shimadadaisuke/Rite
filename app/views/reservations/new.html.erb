@@ -1,29 +1,41 @@
-<h1>New Reservation</h1>
+<h1>ご予約画面</h1>
 
-<%= form_with(model: @reservation, url: create_reservation_path) do |form| %>
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name, required: true %>
-    <% if @reservation.errors[:first_name].any? %>
-      <div class="error">
-        <%= @reservation.errors[:first_name].first %>
-      </div>
-    <% end %>
-  </div>
+<%= form_with model: @reservation, url: reservations_path do |form| %>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name, required: true %>
-    <% if @reservation.errors[:last_name].any? %>
-      <div class="error">
-        <%= @reservation.errors[:last_name].first %>
-      </div>
-    <% end %>
-  </div>
+  
+  <p>ご予約日: <%= @formatted_date %></p>
 
-  <%= form.hidden_field :reservation_date, value: params[:date] %>
+  <p>ご予約時間: <%= params[:start_time] %></p>
 
-  <%= form.submit "予約する", class: "btn btn-primary" %>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 100px; text-align: center;">チェック</th>
+        <th style="text-align: center;">メニュー</th>
+        <th style="width: 100px; text-align: center;">金額</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td style="width: 100px; text-align: center; vertical-align: middle;">
+            <%= form.check_box :product_ids, { multiple: true, class: 'checkbox' }, product.id, nil %>
+          </td>
+          <td style="text-align: center; vertical-align: middle;"><%= product.name %></td>
+          <td style="width: 100px; text-align: center; vertical-align: middle;"><%= product.price %>円</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <style>
+    .checkbox {
+      transform: scale(2);
+    }
+  </style>
+
+  <%= form.hidden_field :date, value: params[:date] %>
+
+  <%= form.submit "予約する" %>
+
 <% end %>
-
-<%= link_to "戻る", calendars_path(date: params[:date]), class: "btn btn-secondary" %>

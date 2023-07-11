@@ -1,7 +1,7 @@
-<h1>ご予約画面</h1>
+<h1>空席確認・予約する</h1>
 
-<h1>Welcome, <%= @firstname %> <%= @lastname %> 様</h1>
-
+<h>Welcome, <%= @firstname %> <%= @lastname %> 様</h1>
+<h3>＜ご予約したい日時を選択してください。＞</h3>
 <div class="current-month-container">
   <h2 class="current-month"><%= @current_month.strftime("%Y年%m月") %></h2>
 </div>
@@ -51,6 +51,10 @@
   .holiday-description {
     color: black;
   }
+
+  .today-cell {
+    background-color: #FFFFCC;
+  }
 </style>
 <table>
   <tr>
@@ -70,7 +74,9 @@
         <% if day.nil? %>
           <td></td>
         <% else %>
-          <td>
+          <% cell_classes = []
+             cell_classes << 'today-cell' if day[:date] == Date.today %>
+          <td class="<%= cell_classes.join(' ') %>">
             <% if day[:date].is_a?(Date) %>
               <div style="text-align: left;"><%= day[:date].day %></div>
               <% day[:holidays].each do |holiday| %>
@@ -81,10 +87,14 @@
               <% end %>
               <% day[:events].each do |event| %>
                 <div class="holiday-description" style="text-align: center;">
-                  <%= link_to event[:start_time] + ' - ' + event[:end_time], new_reservation_path(date: day[:date]) %>
+                  <% if day[:date] > Date.today %>
+                  <%= link_to event[:start_time] + ' - ' + event[:end_time], new_reservation_path(date: day[:date], start_time: event[:start_time], end_time: event[:end_time]), data: { date: day[:date].strftime("%Y-%m-%d %H:%M"), event_string: event[:start_time] + ' - ' + event[:end_time] } %>
+                                    <% else %>
+                    <%= event[:start_time] + ' - ' + event[:end_time] %>
+                  <% end %>
                 </div>
               <% end %>
-            <% else %>
+                                        <% else %>
               <div style="text-align: center;"><%= day[:date] %></div>
               <% day[:events].each do |event| %>
                 <div style="text-align: center;"><%= event %></div>

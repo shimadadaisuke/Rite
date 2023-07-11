@@ -6,8 +6,13 @@ Rails.application.routes.draw do
     passwords: 'passwords'
   }
 
-  resources :reservations
-  #post '/signup', to: 'calendars#create', as: :create_user_reservations
+  resources :reservations do
+    collection do
+      get 'confirm'
+      post 'confirm', to: 'reservations#create_confirm'
+    end
+  end
+  
 
   # ユーザー登録と作成のルーティング
   get '/signup', to: 'users#new', as: :new_user
@@ -28,5 +33,4 @@ Rails.application.routes.draw do
   root 'sessions#new'
 
   resources :users
-
 end
